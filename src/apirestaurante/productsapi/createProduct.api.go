@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dekklabs/restaurantes/src/apirestaurante"
 	"github.com/dekklabs/restaurantes/src/entidades"
 	"github.com/dekklabs/restaurantes/src/model/products"
 )
@@ -15,13 +14,16 @@ import (
 //CreateProductApi api para crear un producto
 func CreateProductApi(w http.ResponseWriter, r *http.Request) {
 
-	idUsuario := apirestaurante.IDusuario
-	var id = strconv.Itoa(int(idUsuario))
+	// idUsuario := apirestaurante.IDusuario
+	// var id = strconv.Itoa(int(idUsuario))
 
 	file, handler, err := r.FormFile("image")
 	var extension = strings.Split(handler.Filename, ".")[1]
 
-	var archivo string = "uploads/products/" + id + "." + extension
+	nombre := r.PostFormValue("name")
+	splitnombre := strings.Replace(nombre, " ", "-", -1)
+
+	var archivo string = "uploads/products/" + splitnombre + "." + extension
 
 	f, err := os.OpenFile(archivo, os.O_WRONLY|os.O_CREATE, 0666)
 
@@ -50,7 +52,7 @@ func CreateProductApi(w http.ResponseWriter, r *http.Request) {
 		Description:    r.PostFormValue("description"),
 		Capacity:       capacity,
 		Deliverable:    int64(delivery),
-		Image:          id + "." + extension,
+		Image:          splitnombre + "." + extension,
 		Category_id:    int64(category_id),
 		Market_id:      int64(market_id),
 	}

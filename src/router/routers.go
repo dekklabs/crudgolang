@@ -22,6 +22,7 @@ func Routers(router *mux.Router) {
 
 	// Products
 	router.HandleFunc("/api/v1/get-products", middlew.VerifyDB(api.GetProductsApi)).Methods("GET")
+	router.HandleFunc("/api/v1/get-imagen-producto", middlew.VerifyDB(api.GetImageProductApi)).Methods("GET")
 
 	/* Login */
 	router.HandleFunc("/api/v1/login", middlew.VerifyDB(api.LoginApi)).Methods("POST")

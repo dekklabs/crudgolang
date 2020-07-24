@@ -26,6 +26,5 @@ func Routers(router *mux.Router) {
 
 	/* Login */
 	router.HandleFunc("/api/v1/login", middlew.VerifyDB(api.LoginApi)).Methods("POST")
-
 	router.HandleFunc("/api/v1/ver-perfil", middlew.VerifyDB(middlew.VarifyJwt(api.GetProfileApi))).Methods("GET")
 }
